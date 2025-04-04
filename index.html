@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="manifest" href="site.webmanifest" />
+  <title>In-Play SGM Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Same Game Multi — In Play</h2>
+    <div class="match-info">
+      <span>Oatlands Golf Club - Tiger Tee Competition</span>
+      <span>04/04/2025</span>
+    </div>
+    
+    <ul class="legs">
+      <li class="leg pending">
+        <div class="circle"></div>
+        Brendan Oakes to score over 31.5 stableford points (net)
+      </li>
+      <li class="leg pending">
+        <div class="circle"></div>
+        Brendan Oakes to score 1 or more Birdies 
+      </li>
+      <li class="leg pending">
+        <div class="circle"></div>
+        Head to Head B Oakes vs. A Murray (Brendan Oakes to win)
+      </li>
+      <li class="leg pending">
+        <div class="circle"></div>
+       Stableford: Brendan Oakes to have one wipe. (>0, <2)
+      </li>
+    </ul>
+  </div>
+<!-- Outlay / Odds Section -->
+<div class="status-section">
+    <div><strong>Status:</strong> Ongoing</div>
+    <div><strong>Fixed Odds:</strong> 4.68</div>
+    <div><strong>Outlay:</strong> $10.00</div>
+    <div><strong>Potential Collect:</strong> $46.80</div>
+
+  </div>
+  <!-- Player Scorecard -->
+
+
+<h3 style="margin-top: 40px;">Scorecard</h3>
+
+<table class="scorecard-table" id="front-nine">
+  <thead>
+    <tr>
+      <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>Out</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="par-row">
+      <td>4</td><td>3</td><td>4</td><td>4</td><td>3</td><td>4</td><td>4</td><td>5</td><td>3</td><td>34</td>
+    </tr>
+    <tr class="score-row">
+      <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+    </tr>
+    <tr class="points-row">
+      <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="scorecard-table" id="back-nine">
+  <thead>
+    <tr>
+      <th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>In</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="par-row">
+      <td>4</td><td>4</td><td>3</td><td>5</td><td>4</td><td>5</td><td>4</td><td>4</td><td>3</td><td>36</td>
+    </tr>
+    <tr class="score-row">
+      <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+    </tr>
+    <tr class="points-row">
+      <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+    </tr>
+  </tbody>
+</table>
+
+
+  
+  <script src="script.js"></script>
+  <script>
+    function applyScoreColors(tableId) {
+      const table = document.getElementById(tableId);
+      if (!table) return;
+  
+      const parRow = table.querySelector(".par-row");
+      const scoreRow = table.querySelector(".score-row");
+  
+      if (!parRow || !scoreRow) return;
+  
+      const parCells = parRow.querySelectorAll("td");
+      const scoreCells = scoreRow.querySelectorAll("td");
+  
+      for (let i = 0; i < parCells.length - 1; i++) { // exclude total
+        const par = parseInt(parCells[i].innerText);
+        const score = parseInt(scoreCells[i].innerText);
+        const diff = score - par;
+  
+        if (isNaN(par) || isNaN(score)) continue;
+  
+        let bg = '', color = '';
+  
+        if (diff === 0) {
+          bg = 'white'; color = 'black'; // par
+        } else if (diff === -1) {
+          bg = '#add8e6'; color = 'black'; // birdie
+        } else if (diff === -2) {
+          bg = 'blue'; color = 'white'; // eagle
+        } else if (diff <= -3) {
+          bg = 'navy'; color = 'white'; // albatross
+        } else if (diff === 1) {
+          bg = 'orange'; color = 'black'; // bogey
+        } else if (diff >= 2) {
+          bg = 'red'; color = 'white'; // double or worse
+        }
+  
+        scoreCells[i].style.backgroundColor = bg;
+        scoreCells[i].style.color = color;
+      }
+    }
+  
+    applyScoreColors("front-nine");
+    applyScoreColors("back-nine");
+  </script>
+  
+</body>
+</html>
